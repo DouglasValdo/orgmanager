@@ -27,11 +27,12 @@
                     <img src="{{ $org->avatar }}" class="w-24 h-24 rounded-full mb-4">
                 </div>
 
-                <h1 class="font-bold text-2xl mb-2 text-center text-grey-darkest">Join <a class="no-underline text-inherit link-shadow link-transition" href="https://github.com/{{ $org->name }}" target="_blank">{{ $org->pretty_name or $org->name }}</a></h1>
+                <h1 class="font-bold text-2xl mb-2 text-center text-grey-darkest">Join <a class="no-underline text-inherit link-shadow link-transition" href="https://github.com/{{ $org->name }}" target="_blank" rel="noopener noreferrer">{{ $org->pretty_name or $org->name }}</a></h1>
+
 
                 @if (optional($org->team)->exists)
                     @if ($org->team->privacy == 'closed')
-                        <h1 class="text-sm mb-4 text-center text-grey-darker font-medium">You will also join the <a href="https://github.com/orgs/{{ $org->name }}/teams/{{ str_slug($org->team->name) }}" target="_blank" class="no-underline text-inherit link-shadow link-transition">{{ $org->team->name }}</a> team</h1>
+                        <h1 class="text-sm mb-4 text-center text-grey-darker font-medium">You will also join the <a href="https://github.com/orgs/{{ $org->name }}/teams/{{ str_slug($org->team->name) }}" target="_blank" rel="noopener noreferrer" class="no-underline text-inherit link-shadow link-transition">{{ $org->team->name }}</a> team</h1>
                     @else
                         <h1 class="text-sm mb-4 text-center text-grey-darker font-medium">You will also join the private {{ $org->team->name }} team</h1>
                     @endif
@@ -61,12 +62,14 @@
                     </button>
                 </div>
             </form>
+            <div id="codefund_ad"></div>
         </div>
     </div>
-    <script src="https://unpkg.com/sweetalert2@7.0.6/dist/sweetalert2.all.js"></script>
+    <script src="{{ mix('js/landing.js') }}"></script>
+    <script src="https://codefund.io/scripts/e9d802da-6c58-4907-b8a2-079a78adfc64/embed.js"></script>
     @if (count($errors) > 0)
         <script>
-            sweetAlert("Oops...", "{{ $errors->first() }}", "error");
+            swal("Oops...", "{{ $errors->first() }}", "error");
         </script>
     @endif
     @if (session('success'))
